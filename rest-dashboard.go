@@ -193,13 +193,14 @@ func (r *Client) getRawDashboard(ctx context.Context, path string) ([]byte, Boar
 // Deprecated: since Grafana v5 you should use uids. Use GetRawDashboardByUID() for that.
 func (r *Client) GetRawDashboardPerms(ctx context.Context, boardId uint) ([]byte, error) {
 	var (
-		raw    []byte
-		result struct {
+		raw []byte
+		/*result struct {
 			Meta  BoardProperties `json:"meta"`
 			Board json.RawMessage `json:"dashboard"`
-		}
-		code int
-		err  error
+		}*/
+		result interface{}
+		code   int
+		err    error
 	)
 	if raw, code, err = r.get(ctx, fmt.Sprintf("/api/dashboards/id/%d/permissions", boardId), nil); err != nil {
 		return nil, err
@@ -212,7 +213,7 @@ func (r *Client) GetRawDashboardPerms(ctx context.Context, boardId uint) ([]byte
 	if err := dec.Decode(&result); err != nil {
 		return nil, errors.Wrap(err, "unmarshal board")
 	}
-	return []byte(result.Board), err
+	return []byte(raw), err
 }
 
 // GetRawDashboardByUID loads a dashboard and its metadata from Grafana by dashboard uid.
