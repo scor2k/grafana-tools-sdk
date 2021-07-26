@@ -145,6 +145,28 @@ type (
 		Tooltip     *string  `json:"tooltip,omitempty"`
 		URL         *string  `json:"url,omitempty"`
 	}
+	// Permission represents dashboard permissions
+	Permission struct {
+		DashboardId    uint   `json:"id"`
+		Created        string `json:"created"`
+		Updated        string `json:"updated"`
+		UserID         uint   `json:"userId"`
+		UserLogin      string `json:"userLogin"`
+		UserEmail      string `json:"userEmail"`
+		UserAvatarUrl  string `json:"userAvatarUrl"`
+		TeamId         uint   `json:"teamId"`
+		TeamEmail      string `json:"teamEmail"`
+		TeamAvatarUrl  string `json:"teamAvatarUrl"`
+		Team           string `json:"team"`
+		Permission     uint   `json:"permission"`
+		PermissionName string `json:"permissionName"`
+		UID            string `json:"uid"`
+		Title          string `json:"title"`
+		Slug           string `json:"slug"`
+		IsFolder       bool   `json:"isFolder"`
+		URL            string `json:"url"`
+		Inherited      string `json:"inherited"`
+	}
 )
 
 // Height of rows maybe passed as number (ex 200) or
