@@ -434,3 +434,21 @@ func (r *Client) UpdateOrgAddress(ctx context.Context, address Address, oid uint
 	}
 	return resp, nil
 }
+
+// Invites send an invite to a user to join the current organization.
+// Reflects POST /api/org/invites API call.
+func (r *Client) OrgInvites(ctx context.Context, userInvite OrgInvite) (StatusMessage, error) {
+	var (
+		raw   []byte
+		reply StatusMessage
+		err   error
+	)
+	if raw, err = json.Marshal(userInvite); err != nil {
+		return StatusMessage{}, err
+	}
+	if raw, _, err = r.post(ctx, "api/org/invites", nil, raw); err != nil {
+		return StatusMessage{}, err
+	}
+	err = json.Unmarshal(raw, &reply)
+	return reply, err
+}

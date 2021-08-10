@@ -147,7 +147,8 @@ type (
 	}
 	// Permission represents dashboard permissions
 	Permission struct {
-		DashboardId    uint   `json:"id"`
+		ID             uint   `json:"id"`
+		DashboardId    uint   `json:"dashboardId"`
 		Created        string `json:"created"`
 		Updated        string `json:"updated"`
 		UserID         uint   `json:"userId"`
@@ -165,7 +166,7 @@ type (
 		Slug           string `json:"slug"`
 		IsFolder       bool   `json:"isFolder"`
 		URL            string `json:"url"`
-		Inherited      string `json:"inherited"`
+		Inherited      bool   `json:"inherited"`
 	}
 )
 

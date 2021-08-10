@@ -1,13 +1,14 @@
 package sdk
 
 /*
-   Copyright 2016-2017 Alexander I.Grafov <grafov@gmail.com>
+   Copyright 2016 Alexander I.Grafov <grafov@gmail.com>
+   Copyright 2016-2019 The Grafana SDK authors
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
    You may obtain a copy of the License at
 
-       http://www.apache.org/licenses/LICENSE-2.0
+	   http://www.apache.org/licenses/LICENSE-2.0
 
    Unless required by applicable law or agreed to in writing, software
    distributed under the License is distributed on an "AS IS" BASIS,
@@ -18,22 +19,19 @@ package sdk
    ॐ तारे तुत्तारे तुरे स्व
 */
 
-type Org struct {
-	ID      uint    `json:"id"`
-	Name    string  `json:"name"`
-	Address Address `json:"address"`
+type Team struct {
+	ID          uint   `json:"id"`
+	OrgID       uint   `json:"orgId"`
+	Name        string `json:"name"`
+	Email       string `json:"email"`
+	AvatarUrl   string `json:"avatarUrl"`
+	MemberCount uint   `json:"memberCount"`
+	Permission  uint   `json:"permission"`
 }
 
-type OrgUser struct {
-	ID    uint   `json:"userId"`
-	OrgId uint   `json:"orgId"`
-	Email string `json:"email"`
-	Login string `json:"login"`
-	Role  string `json:"role"`
-}
-type OrgInvite struct {
-	LoginOrEmail string `json:"loginOrEmail"`
-	Name         string `json:"name"`
-	SendEmail    bool   `json:"sendEmail"`
-	Role         string `json:"role"`
+type PageTeams struct {
+	TotalCount int    `json:"totalCount"`
+	Teams      []Team `json:"teams"`
+	Page       int    `json:"page"`
+	PerPage    int    `json:"perPage"`
 }

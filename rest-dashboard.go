@@ -178,26 +178,36 @@ func (r *Client) getRawDashboard(ctx context.Context, path string) ([]byte, Boar
 	return []byte(result.Board), result.Meta, err
 }
 
-// GetRawDashboard loads a dashboard JSON from Grafana instance along with metadata for a dashboard.
-// Contrary to GetDashboard() it not unpack loaded JSON to Board structure. Instead it
-// returns it as byte slice. It guarantee that data of dashboard returned untouched by conversion
-// with Board so no matter how properly fields from a current version of Grafana mapped to
-// our Board fields. It useful for backuping purposes when you want a dashboard exactly with
-// same data as it exported by Grafana.
-//
-// For dashboards from a filesystem set "file/" prefix for slug. By default dashboards from
-// a database assumed. Database dashboards may have "db/" prefix or may have not, it will
-// be appended automatically.
+// GetDashboardPerms loads a dashboard from Grafana instance.
 //
 // Reflects GET /api/dashboards/id/:dashboardId/permissions API call.
-// Deprecated: since Grafana v5 you should use uids. Use GetRawDashboardByUID() for that.
+func (r *Client) GetDashboardPerms(ctx context.Context, boardId uint) ([]Permission, error) {
+	var perms []Permission
+	raw, err := r.GetRawDashboardPerms(ctx, boardId)
+	if err != nil {
+		return perms, errors.Wrap(err, "get raw dashboard permissions")
+	}
+	dec := json.NewDecoder(bytes.NewReader(raw))
+	dec.UseNumber()
+	if err := dec.Decode(&perms); err != nil {
+		return perms, errors.Wrap(err, "unmarshal board permissions")
+	}
+	return perms, err
+}
+
+// GetRawDashboardPerms loads dashboard permissions JSON from Grafana instance.
+// Contrary to GetDashboard() it not unpack loaded JSON to Board structure.
+// Instead it returns it as byte slice.
+// It guarantee that data of dashboard permissions returned untouched by conversion
+// with Permission so no matter how properly fields from a current version of Grafana mapped to
+// our Board fields.
+// It useful for backuping purposes when you want a dashboard permission exactly with
+// same data as it exported by Grafana.
+//
+// Reflects GET /api/dashboards/id/:dashboardId/permissions API call.
 func (r *Client) GetRawDashboardPerms(ctx context.Context, boardId uint) ([]byte, error) {
 	var (
-		raw []byte
-		/*result struct {
-			Meta  BoardProperties `json:"meta"`
-			Board json.RawMessage `json:"dashboard"`
-		}*/
+		raw    []byte
 		result interface{}
 		code   int
 		err    error
