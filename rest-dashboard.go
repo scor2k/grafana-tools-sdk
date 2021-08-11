@@ -439,6 +439,31 @@ func (r *Client) DeleteDashboardByUID(ctx context.Context, uid string) (StatusMe
 	return reply, err
 }
 
+//UpdateDashboardPermissions updates the permissions of the dashboard specified by boardId.
+// Reflects POST /api/dashboards/id/:dashboardId/permissions API call.
+func (r *Client) UpdateDashboardPermissions(ctx context.Context, boardPerms BoardPermissions, boardId uint) (StatusMessage, error) {
+	var (
+		raw  []byte
+		resp StatusMessage
+		code int
+		err  error
+	)
+	if raw, err = json.Marshal(boardPerms); err != nil {
+		return StatusMessage{}, err
+	}
+	fmt.Printf("boardPerms: %s", raw)
+	if raw, code, err = r.post(ctx, fmt.Sprintf("api/dashboards/id/%d/permissions", boardId), nil, raw); err != nil {
+		return StatusMessage{}, err
+	}
+	if err = json.Unmarshal(raw, &resp); err != nil {
+		return StatusMessage{}, err
+	}
+	if code != 200 {
+		return resp, fmt.Errorf("HTTP error %d: returns %s", code, *resp.Message)
+	}
+	return resp, err
+}
+
 type (
 	// SearchParam is a type for specifying Search params.
 	SearchParam func(*url.Values)

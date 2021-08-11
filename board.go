@@ -155,10 +155,11 @@ type (
 		UserLogin      string `json:"userLogin"`
 		UserEmail      string `json:"userEmail"`
 		UserAvatarUrl  string `json:"userAvatarUrl"`
-		TeamId         uint   `json:"teamId"`
+		TeamID         uint   `json:"teamId"`
 		TeamEmail      string `json:"teamEmail"`
 		TeamAvatarUrl  string `json:"teamAvatarUrl"`
 		Team           string `json:"team"`
+		Role           string `json:"role"`
 		Permission     uint   `json:"permission"`
 		PermissionName string `json:"permissionName"`
 		UID            string `json:"uid"`
@@ -167,6 +168,15 @@ type (
 		IsFolder       bool   `json:"isFolder"`
 		URL            string `json:"url"`
 		Inherited      bool   `json:"inherited"`
+	}
+	PermissionItem struct {
+		Role       string `json:"role,omitempty"`
+		TeamID     uint   `json:"teamId,omitempty"`
+		UserID     uint   `json:"userId,omitempty"`
+		Permission uint   `json:"permission"`
+	}
+	BoardPermissions struct {
+		Items []PermissionItem `json:"items"`
 	}
 )
 
@@ -260,4 +270,42 @@ func (b *Board) AddRow(title string) *Row {
 func (b *Board) UpdateSlug() string {
 	b.Slug = strings.ToLower(slug.Make(b.Title))
 	return b.Slug
+}
+
+//GetPermissionItem build PermissionItem from Permission
+func (p *Permission) GetPermissionItem() PermissionItem {
+	pi := PermissionItem{}
+	if p.Role != "" {
+		pi.Role = p.Role
+	} else if p.UserID != 0 {
+		pi.UserID = p.UserID
+	} else if p.TeamID != 0 {
+		pi.TeamID = p.TeamID
+	} else {
+		return pi
+	}
+	pi.Permission = p.Permission
+	return pi
+}
+
+func (bp *BoardPermissions) Append(pi PermissionItem) {
+	for _, item := range bp.Items {
+		if (pi.Role != "" && pi.Role == item.Role) ||
+			(pi.UserID != 0 && pi.UserID == item.UserID) ||
+			(pi.TeamID != 0 && pi.TeamID == item.TeamID) {
+			return
+		}
+	}
+	permItem := PermissionItem{}
+	if pi.Role != "" {
+		permItem.Role = pi.Role
+		permItem.Permission = pi.Permission
+	} else if pi.UserID != 0 {
+		permItem.UserID = pi.UserID
+		permItem.Permission = pi.Permission
+	} else if pi.TeamID != 0 {
+		permItem.TeamID = pi.TeamID
+		permItem.Permission = pi.Permission
+	}
+	bp.Items = append(bp.Items, permItem)
 }
