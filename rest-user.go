@@ -162,3 +162,26 @@ func (r *Client) SwitchActualUserContext(ctx context.Context, oid uint) (StatusM
 	}
 	return resp, nil
 }
+
+// GetUserOrgs gets organizations for user by ID.
+// Reflects GET /api/users/:id/orgs API call.
+func (r *Client) GetUserOrgs(ctx context.Context, id uint) ([]UserOrg, error) {
+	var (
+		raw      []byte
+		userOrgs []UserOrg
+		code     int
+		err      error
+	)
+	if raw, code, err = r.get(ctx, fmt.Sprintf("api/users/%d/orgs", id), nil); err != nil {
+		return userOrgs, err
+	}
+	if code != 200 {
+		return userOrgs, fmt.Errorf("HTTP error %d: returns %s", code, raw)
+	}
+	dec := json.NewDecoder(bytes.NewReader(raw))
+	dec.UseNumber()
+	if err := dec.Decode(&userOrgs); err != nil {
+		return userOrgs, fmt.Errorf("unmarshal user: %s\n%s", err, raw)
+	}
+	return userOrgs, err
+}

@@ -53,3 +53,8 @@ type PageUsers struct {
 	Page       int    `json:"page"`
 	PerPage    int    `json:"perPage"`
 }
+type UserOrg struct {
+	OrgId uint   `json:"orgId"`
+	Name  string `json:"name"`
+	Role  string `json:"role"`
+}
