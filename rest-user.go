@@ -185,3 +185,26 @@ func (r *Client) GetUserOrgs(ctx context.Context, id uint) ([]UserOrg, error) {
 	}
 	return userOrgs, err
 }
+
+// GetUserTeams gets teams for user by ID.
+// Reflects GET /api/users/:id/teams API call.
+func (r *Client) GetUserTeams(ctx context.Context, id uint) ([]Team, error) {
+	var (
+		raw   []byte
+		teams []Team
+		code  int
+		err   error
+	)
+	if raw, code, err = r.get(ctx, fmt.Sprintf("api/users/%d/teams", id), nil); err != nil {
+		return teams, err
+	}
+	if code != 200 {
+		return teams, fmt.Errorf("HTTP error %d: returns %s", code, raw)
+	}
+	dec := json.NewDecoder(bytes.NewReader(raw))
+	dec.UseNumber()
+	if err := dec.Decode(&teams); err != nil {
+		return teams, fmt.Errorf("unmarshal user: %s\n%s", err, raw)
+	}
+	return teams, err
+}
