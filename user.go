@@ -1,5 +1,7 @@
 package sdk
 
+import "time"
+
 /*
    Copyright 2016 Alexander I.Grafov <grafov@gmail.com>
    Copyright 2016-2019 The Grafana SDK authors
@@ -20,18 +22,20 @@ package sdk
 */
 
 type User struct {
-	ID             uint     `json:"id"`
-	Login          string   `json:"login"`
-	Name           string   `json:"name"`
-	Email          string   `json:"email"`
-	OrgID          uint     `json:"orgId"`
-	Theme          string   `json:"theme"`
-	Password       string   `json:"password"`
-	IsDisabled     bool     `json:"isDisabled"`
-	AuthLabels     []string `json:"authLabels"`
-	IsGrafanaAdmin bool     `json:"isGrafanaAdmin"`
-	IsExternal     bool     `json:"isExternal"`
-	IsAdmin        bool     `json:"isAdmin"` //Different value used for Search Endpoint
+	ID             uint      `json:"id"`
+	Login          string    `json:"login"`
+	Name           string    `json:"name"`
+	Email          string    `json:"email"`
+	OrgID          uint      `json:"orgId"`
+	Theme          string    `json:"theme"`
+	Password       string    `json:"password"`
+	IsDisabled     bool      `json:"isDisabled"`
+	AuthLabels     []string  `json:"authLabels"`
+	IsGrafanaAdmin bool      `json:"isGrafanaAdmin"`
+	IsExternal     bool      `json:"isExternal"`
+	IsAdmin        bool      `json:"isAdmin"` //Different value used for Search Endpoint
+	LastSeenAt     time.Time `json:"lastSeenAt,omitempty"`
+	LastSeenAtAge  string    `json:"lastSeenAtAge,omitempty"`
 }
 
 type UserRole struct {
