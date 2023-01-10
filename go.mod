@@ -23,3 +23,5 @@ require (
 	golang.org/x/sys v0.0.0-20210630005230-0f9fa26af87c // indirect
 	gopkg.in/yaml.v3 v3.0.0-20200313102051-9f266ea9e77c // indirect
 )
+
+replace github.com/grafana-tools/sdk => github.com/enuan/grafana-tools-sdk v0.0.0-20230110123922-833dbc224f86
