@@ -58,3 +58,6 @@ type UserOrg struct {
 	Name  string `json:"name"`
 	Role  string `json:"role"`
 }
+type UserPassword struct {
+	Password string `json:"password"`
+}
