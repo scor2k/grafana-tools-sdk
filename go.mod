@@ -1,4 +1,4 @@
-module github.com/grafana-tools/sdk
+module github.com/enuan/grafana-tools-sdk
 
 go 1.19
 
