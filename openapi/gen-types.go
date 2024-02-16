@@ -3344,19 +3344,19 @@ type UserSearchHitDTO struct {
 
 // UserToken UserToken represents a user token
 type UserToken struct {
-	AuthToken     *string `json:"AuthToken,omitempty"`
-	AuthTokenSeen *bool   `json:"AuthTokenSeen,omitempty"`
-	ClientIp      *string `json:"ClientIp,omitempty"`
-	CreatedAt     *int64  `json:"CreatedAt,omitempty"`
-	Id            *int64  `json:"Id,omitempty"`
-	PrevAuthToken *string `json:"PrevAuthToken,omitempty"`
-	RevokedAt     *int64  `json:"RevokedAt,omitempty"`
-	RotatedAt     *int64  `json:"RotatedAt,omitempty"`
-	SeenAt        *int64  `json:"SeenAt,omitempty"`
-	UnhashedToken *string `json:"UnhashedToken,omitempty"`
-	UpdatedAt     *int64  `json:"UpdatedAt,omitempty"`
-	UserAgent     *string `json:"UserAgent,omitempty"`
-	UserId        *int64  `json:"UserId,omitempty"`
+	AuthToken     *string    `json:"AuthToken,omitempty"`
+	AuthTokenSeen *bool      `json:"AuthTokenSeen,omitempty"`
+	ClientIp      *string    `json:"ClientIp,omitempty"`
+	CreatedAt     *time.Time `json:"CreatedAt,omitempty"`
+	Id            *int64     `json:"Id,omitempty"`
+	PrevAuthToken *string    `json:"PrevAuthToken,omitempty"`
+	RevokedAt     *int64     `json:"RevokedAt,omitempty"`
+	RotatedAt     *int64     `json:"RotatedAt,omitempty"`
+	SeenAt        *time.Time `json:"SeenAt,omitempty"`
+	UnhashedToken *string    `json:"UnhashedToken,omitempty"`
+	UpdatedAt     *int64     `json:"UpdatedAt,omitempty"`
+	UserAgent     *string    `json:"UserAgent,omitempty"`
+	UserId        *int64     `json:"UserId,omitempty"`
 }
 
 // Userinfo The Userinfo type is an immutable encapsulation of username and

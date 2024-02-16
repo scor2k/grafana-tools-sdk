@@ -11683,8 +11683,8 @@
             "type": "string"
           },
           "CreatedAt": {
-            "format": "int64",
-            "type": "integer"
+            "format": "date-time",
+            "type": "string"
           },
           "Id": {
             "format": "int64",
@@ -11702,8 +11702,8 @@
             "type": "integer"
           },
           "SeenAt": {
-            "format": "int64",
-            "type": "integer"
+            "format": "date-time",
+            "type": "string"
           },
           "UnhashedToken": {
             "type": "string"
