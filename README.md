@@ -136,3 +136,13 @@ https://github.com/grafana-tools/sdk
 * [github.com/raintank/memo](https://github.com/raintank/memo) — send slack mentions to Grafana annotations.
 * [github.com/retzkek/grafctl](https://github.com/retzkek/grafctl) — backup/restore/track dashboards with git.
 * [github.com/grafana/grizzly](https://github.com/grafana/grizzly) — manage Grafana dashboards via CLI and libsonnet/jsonnet
+
+
+## swagger
+Click on:
+- [online API exec](https://metrics.m3.enuan.com/swagger?urls.primaryName=Grafana%20API%20(OpenAPI%20v3))
+- [swagger.json](https://metrics.m3.enuan.com/public/openapi3.json)
+
+```sh
+curl https://metrics.m3.enuan.com/public/openapi3.json > openapi/swagger.json
+```

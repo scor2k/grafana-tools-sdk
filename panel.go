@@ -434,7 +434,7 @@ type (
 
 // for a graph panel
 type (
-	// TODO look at schema versions carefully
+	/*// TODO look at schema versions carefully
 	// grid was obsoleted by xaxis and yaxes
 	grid struct { //nolint: unused,deadcode
 		LeftLogBase     *int     `json:"leftLogBase"`
@@ -454,7 +454,7 @@ type (
 		Name   interface{} `json:"name"` // TODO what is this?
 		Show   bool        `json:"show"`
 		Values *[]string   `json:"values,omitempty"`
-	}
+	}*/
 	Axis struct {
 		Format   string       `json:"format"`
 		LogBase  int          `json:"logBase"`

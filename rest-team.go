@@ -67,7 +67,7 @@ func (r *Client) GetTeamByName(ctx context.Context, name string) (Team, error) {
 		return team, err
 	}
 	if len(search.Teams) == 0 {
-		return Team{}, TeamNotFound
+		return Team{}, ErrTeamNotFound
 	}
 
 	return search.Teams[0], nil
@@ -260,8 +260,8 @@ func (r *Client) UpdateTeamPreferences(ctx context.Context, teamId uint, tp Team
 	return resp, nil
 }
 
-// TeamNotFound is an error returned if the given team was not found.
-var TeamNotFound = fmt.Errorf("team not found")
+// ErrTeamNotFound is an error returned if the given team was not found.
+var ErrTeamNotFound = fmt.Errorf("team not found")
 
 // SearchTeamParams is the type for all options implementing query parameters
 // perpage optional. default 1000

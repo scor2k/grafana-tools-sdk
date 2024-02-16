@@ -4,6 +4,8 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+
+	"github.com/enuan/grafana-tools-sdk/openapi"
 )
 
 // CreateUser creates a new global user.
@@ -97,6 +99,19 @@ func (r *Client) UpdateUserPassword(ctx context.Context, password UserPassword, 
 	}
 	if raw, _, err = r.put(ctx, fmt.Sprintf("api/admin/users/%d/password", uid), nil, raw); err != nil {
 		return StatusMessage{}, err
+	}
+	err = json.Unmarshal(raw, &reply)
+	return reply, err
+}
+
+func (r *Client) GetUserAuthToken(ctx context.Context, id uint) ([]openapi.UserToken, error) {
+	var (
+		raw   []byte
+		reply []openapi.UserToken
+		err   error
+	)
+	if raw, _, err = r.get(ctx, fmt.Sprintf("api/admin/users/%d/auth-tokens", id), nil); err != nil {
+		return reply, err
 	}
 	err = json.Unmarshal(raw, &reply)
 	return reply, err
