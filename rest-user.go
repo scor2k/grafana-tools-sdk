@@ -25,6 +25,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/url"
+
+	"github.com/enuan/grafana-tools-sdk/openapi"
 )
 
 // GetActualUser gets an actual user.
@@ -207,4 +209,21 @@ func (r *Client) GetUserTeams(ctx context.Context, id uint) ([]Team, error) {
 		return teams, fmt.Errorf("unmarshal user: %s\n%s", err, raw)
 	}
 	return teams, err
+}
+
+// UpdateUserPermissions updates the permissions of a global user.
+// Requires basic authentication and that the authenticated user is a Grafana Admin.
+// Reflects PUT /api/admin/users/:userId/permissions API call.
+func (r *Client) UserUpdate(ctx context.Context, userProfileDTO openapi.UserProfileDTO, id uint) error {
+	var (
+		raw []byte
+		err error
+	)
+	if raw, err = json.Marshal(userProfileDTO); err != nil {
+		return err
+	}
+	if _, _, err = r.put(ctx, fmt.Sprintf("/users/%d", id), nil, raw); err != nil {
+		return err
+	}
+	return nil
 }
