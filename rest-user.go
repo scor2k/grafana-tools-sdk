@@ -214,16 +214,21 @@ func (r *Client) GetUserTeams(ctx context.Context, id uint) ([]Team, error) {
 // UpdateUserPermissions updates the permissions of a global user.
 // Requires basic authentication and that the authenticated user is a Grafana Admin.
 // Reflects PUT /api/admin/users/:userId/permissions API call.
-func (r *Client) UpdateUser(ctx context.Context, userProfileDTO openapi.UserProfileDTO, id uint) error {
+func (r *Client) UpdateUser(ctx context.Context, userProfileDTO openapi.UserProfileDTO, id uint) (StatusMessage, error) {
 	var (
-		raw []byte
-		err error
+		raw  []byte
+		resp StatusMessage
+		err  error
 	)
 	if raw, err = json.Marshal(userProfileDTO); err != nil {
-		return err
+		return StatusMessage{}, err
 	}
-	if _, _, err = r.put(ctx, fmt.Sprintf("/users/%d", id), nil, raw); err != nil {
-		return err
+	if raw, _, err = r.put(ctx, fmt.Sprintf("/users/%d", id), nil, raw); err != nil {
+		return StatusMessage{}, err
 	}
-	return nil
+	if err = json.Unmarshal(raw, &resp); err != nil {
+		return StatusMessage{}, err
+	}
+
+	return resp, nil
 }
