@@ -214,7 +214,7 @@ func (r *Client) GetUserTeams(ctx context.Context, id uint) ([]Team, error) {
 // UpdateUserPermissions updates the permissions of a global user.
 // Requires basic authentication and that the authenticated user is a Grafana Admin.
 // Reflects PUT /api/admin/users/:userId/permissions API call.
-func (r *Client) UserUpdate(ctx context.Context, userProfileDTO openapi.UserProfileDTO, id uint) error {
+func (r *Client) UpdateUser(ctx context.Context, userProfileDTO openapi.UserProfileDTO, id uint) error {
 	var (
 		raw []byte
 		err error
