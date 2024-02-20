@@ -47,6 +47,42 @@ func (r *Client) DeleteUser(ctx context.Context, uid uint) (StatusMessage, error
 	return resp, nil
 }
 
+// DisableUser disables a global user
+// Requires basic authentication and that the authenticated user ia Grafana Admin
+// Reflects POST api/admin/users/{user_id}/disable API call.
+func (r *Client) DisableUser(ctx context.Context, uid uint) (StatusMessage, error) {
+	var (
+		raw  []byte
+		resp StatusMessage
+		err  error
+	)
+	if raw, _, err = r.post(ctx, fmt.Sprintf("api/admin/users/%d/disable", uid), nil, raw); err != nil {
+		return StatusMessage{}, err
+	}
+	if err = json.Unmarshal(raw, &resp); err != nil {
+		return StatusMessage{}, err
+	}
+	return resp, nil
+}
+
+// EnableUser enables a global user
+// Requires basic authentication and that the authenticated user ia Grafana Admin
+// Reflects POST api/admin/users/{user_id}/disable API call.
+func (r *Client) EnableUser(ctx context.Context, uid uint) (StatusMessage, error) {
+	var (
+		raw  []byte
+		resp StatusMessage
+		err  error
+	)
+	if raw, _, err = r.post(ctx, fmt.Sprintf("api/admin/users/%d/enable", uid), nil, raw); err != nil {
+		return StatusMessage{}, err
+	}
+	if err = json.Unmarshal(raw, &resp); err != nil {
+		return StatusMessage{}, err
+	}
+	return resp, nil
+}
+
 // UpdateUserPermissions updates the permissions of a global user.
 // Requires basic authentication and that the authenticated user is a Grafana Admin.
 // Reflects PUT /api/admin/users/:userId/permissions API call.

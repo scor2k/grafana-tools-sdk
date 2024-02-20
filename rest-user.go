@@ -25,6 +25,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/url"
+	"os"
 
 	"github.com/enuan/grafana-tools-sdk/openapi"
 )
@@ -211,9 +212,7 @@ func (r *Client) GetUserTeams(ctx context.Context, id uint) ([]Team, error) {
 	return teams, err
 }
 
-// UpdateUserPermissions updates the permissions of a global user.
-// Requires basic authentication and that the authenticated user is a Grafana Admin.
-// Reflects PUT /api/admin/users/:userId/permissions API call.
+// UpdateUser reflects PUT /api/users/:userId API call.
 func (r *Client) UpdateUser(ctx context.Context, userProfileDTO openapi.UserProfileDTO, id uint) (StatusMessage, error) {
 	var (
 		raw  []byte
@@ -223,10 +222,13 @@ func (r *Client) UpdateUser(ctx context.Context, userProfileDTO openapi.UserProf
 	if raw, err = json.Marshal(userProfileDTO); err != nil {
 		return StatusMessage{}, err
 	}
-	if raw, _, err = r.put(ctx, fmt.Sprintf("/users/%d", id), nil, raw); err != nil {
+	//fmt.Printf("UpdateUser, disabling: %d, body: %s \n", id, string(raw))
+	if raw, _, err = r.put(ctx, fmt.Sprintf("api/users/%d", id), nil, raw); err != nil {
 		return StatusMessage{}, err
 	}
 	if err = json.Unmarshal(raw, &resp); err != nil {
+		f, _ := os.Create("response.html")
+		f.Write(raw)
 		return StatusMessage{}, err
 	}
 
