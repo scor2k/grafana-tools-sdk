@@ -149,6 +149,25 @@ func (r *Client) GetUserAuthToken(ctx context.Context, id uint) ([]openapi.UserT
 	if raw, _, err = r.get(ctx, fmt.Sprintf("api/admin/users/%d/auth-tokens", id), nil); err != nil {
 		return reply, err
 	}
+	fmt.Println("auth-tokens: ", string(raw))
+	err = json.Unmarshal(raw, &reply)
+	return reply, err
+}
+
+func (r *Client) RevokeAuthToken(ctx context.Context, id uint, authTokenId int64) (StatusMessage, error) {
+	var (
+		raw   []byte
+		reply StatusMessage
+		err   error
+	)
+	token := openapi.RevokeAuthTokenCmd{AuthTokenId: &authTokenId}
+	if raw, err = json.Marshal(token); err != nil {
+		return reply, err
+	}
+
+	if raw, _, err = r.post(ctx, fmt.Sprintf("api/admin/users/%d/revoke-auth-token", id), nil, raw); err != nil {
+		return reply, err
+	}
 	err = json.Unmarshal(raw, &reply)
 	return reply, err
 }
