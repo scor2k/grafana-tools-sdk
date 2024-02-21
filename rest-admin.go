@@ -149,7 +149,6 @@ func (r *Client) GetUserAuthToken(ctx context.Context, id uint) ([]openapi.UserT
 	if raw, _, err = r.get(ctx, fmt.Sprintf("api/admin/users/%d/auth-tokens", id), nil); err != nil {
 		return reply, err
 	}
-	fmt.Println("auth-tokens: ", string(raw))
 	err = json.Unmarshal(raw, &reply)
 	return reply, err
 }
