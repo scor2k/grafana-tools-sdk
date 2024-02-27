@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/enuan/grafana-tools-sdk/openapi"
+	"github.com/scor2k/grafana-tools-sdk/openapi"
 )
 
 // CreateUser creates a new global user.
