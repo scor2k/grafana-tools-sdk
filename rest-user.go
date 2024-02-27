@@ -27,7 +27,7 @@ import (
 	"net/url"
 	"os"
 
-	"github.com/enuan/grafana-tools-sdk/openapi"
+	"github.com/scor2k/grafana-tools-sdk/openapi"
 )
 
 // GetActualUser gets an actual user.

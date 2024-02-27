@@ -1,4 +1,4 @@
-module github.com/enuan/grafana-tools-sdk
+module github.com/scor2k/grafana-tools-sdk
 
 go 1.21
 
@@ -28,3 +28,4 @@ require (
 )
 
 //replace github.com/grafana-tools/sdk => github.com/enuan/grafana-tools-sdk v0.0.0-20230110123922-833dbc224f86
+//replace github.com/enuan/grafana-tools-sdk => github.com/scor2k/grafana-tools-sdk
