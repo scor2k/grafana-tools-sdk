@@ -379,9 +379,15 @@ type (
 		Max        *float64          `json:"max,omitempty"`
 		Color      FieldConfigColor  `json:"color"`
 		Thresholds Thresholds        `json:"thresholds"`
+		Mappings   []FieldMapping    `json:"mappings,omitempty"`
 		Custom     FieldConfigCustom `json:"custom"`
 		Links      []Link            `json:"links,omitempty"`
 	}
+	FieldMapping struct {
+		Options map[string]interface{} `json:"options"`
+		Type    string                 `json:"type"`
+	}
+
 	FieldConfigCustom struct {
 		AxisLabel         string `json:"axisLabel,omitempty"`
 		AxisPlacement     string `json:"axisPlacement"`
