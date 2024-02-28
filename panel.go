@@ -77,16 +77,16 @@ type (
 			X *int `json:"x,omitempty"`
 			Y *int `json:"y,omitempty"`
 		} `json:"gridPos,omitempty"`
-		Height           interface{}  `json:"height,omitempty"` // general
-		FieldConfig      *FieldConfig `json:"fieldConfig,omitempty"`
-		HideTimeOverride *bool        `json:"hideTimeOverride,omitempty"`
-		ID               uint         `json:"id"`
-		IsNew            bool         `json:"isNew"`
-		Links            []Link       `json:"links,omitempty"`    // general
-		MinSpan          *float32     `json:"minSpan,omitempty"`  // templating options
-		OfType           panelType    `json:"-"`                  // it required for defining type of the panel
-		Renderer         *string      `json:"renderer,omitempty"` // display styles
-		Repeat           *string      `json:"repeat,omitempty"`   // templating options
+		Height           interface{} `json:"height,omitempty"` // general
+		FieldConfig      FieldConfig `json:"fieldConfig,omitempty"`
+		HideTimeOverride *bool       `json:"hideTimeOverride,omitempty"`
+		ID               uint        `json:"id"`
+		IsNew            bool        `json:"isNew"`
+		Links            []Link      `json:"links,omitempty"`    // general
+		MinSpan          *float32    `json:"minSpan,omitempty"`  // templating options
+		OfType           panelType   `json:"-"`                  // it required for defining type of the panel
+		Renderer         *string     `json:"renderer,omitempty"` // display styles
+		Repeat           *string     `json:"repeat,omitempty"`   // templating options
 		// RepeatIteration *int64   `json:"repeatIteration,omitempty"`
 		RepeatPanelID *uint `json:"repeatPanelId,omitempty"`
 		ScopedVars    map[string]struct {
@@ -172,14 +172,15 @@ type (
 		Defaults FieldConfigDefaults `json:"defaults"`
 	}
 	Options struct {
-		Orientation   string `json:"orientation"`
-		TextMode      string `json:"textMode"`
-		ColorMode     string `json:"colorMode"`
-		GraphMode     string `json:"graphMode"`
-		JustifyMode   string `json:"justifyMode"`
-		DisplayMode   string `json:"displayMode"`
-		Content       string `json:"content"`
-		Mode          string `json:"mode"`
+		Orientation   string      `json:"orientation"`
+		TextMode      string      `json:"textMode"`
+		Text          interface{} `json:"text"`
+		ColorMode     string      `json:"colorMode"`
+		GraphMode     string      `json:"graphMode"`
+		JustifyMode   string      `json:"justifyMode"`
+		DisplayMode   string      `json:"displayMode"`
+		Content       string      `json:"content"`
+		Mode          string      `json:"mode"`
 		ReduceOptions struct {
 			Values bool     `json:"values"`
 			Fields string   `json:"fields"`
@@ -210,13 +211,20 @@ type (
 		MsResolution bool   `json:"msResolution,omitempty"` // was added in Grafana 3.x
 		Sort         int    `json:"sort,omitempty"`
 	}
+
+	Transformations struct {
+		Id      string      `json:"id"`
+		Options interface{} `json:"options"`
+	}
+
 	TablePanel struct {
-		Columns   []Column      `json:"columns"`
-		Sort      *Sort         `json:"sort,omitempty"`
-		Styles    []ColumnStyle `json:"styles"`
-		Transform string        `json:"transform"`
-		Targets   []Target      `json:"targets,omitempty"`
-		Scroll    bool          `json:"scroll"` // from grafana 3.x
+		Columns         []Column          `json:"columns"`
+		Sort            *Sort             `json:"sort,omitempty"`
+		Styles          []ColumnStyle     `json:"styles"`
+		Transform       string            `json:"transform,omitempty"`
+		Transformations []Transformations `json:"transformations,omitempty"`
+		Targets         []Target          `json:"targets,omitempty"`
+		Scroll          bool              `json:"scroll"` // from grafana 3.x
 	}
 	TextPanel struct {
 		Content     string        `json:"content"`
@@ -561,6 +569,10 @@ type Target struct {
 	RefID      string      `json:"refId"`
 	Datasource interface{} `json:"datasource,omitempty"`
 	Hide       bool        `json:"hide,omitempty"`
+	EditorMode string      `json:"editorMode,omitempty"`
+	Exemplar   bool        `json:"exemplar,omitempty"`
+	Range      bool        `json:"range,omitempty"`
+	QueryType  string      `json:"queryType,omitempty"`
 
 	// For PostgreSQL
 	Table        string `json:"table,omitempty"`

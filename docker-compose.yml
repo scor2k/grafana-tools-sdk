@@ -1,5 +1,5 @@
 ## Used mainly for testing.  
-##  `GRAFANA_VERSION=6.7.1  docker-compose up -d`
+##  `GRAFANA_VERSION=10.2.4  docker-compose up -d`
 version: "3.7"
 services: 
     grafana:
