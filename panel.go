@@ -393,8 +393,8 @@ type (
 		Links      []Link            `json:"links,omitempty"`
 	}
 	FieldMapping struct {
-		Options map[string]interface{} `json:"options"`
-		Type    string                 `json:"type"`
+		Options map[string]interface{} `json:"options,omitempty"`
+		Type    string                 `json:"type,omitempty"`
 	}
 
 	FieldConfigCustom struct {
@@ -428,7 +428,7 @@ type (
 			Mode  string `json:"mode"`
 		} `json:"stacking"`
 		ThresholdsStyle struct {
-			Mode string `json:"mode"`
+			Mode string `json:"mode,omitempty"`
 		} `json:"thresholdsStyle"`
 	}
 	Thresholds struct {
@@ -440,7 +440,7 @@ type (
 		Value *float64 `json:"value"`
 	}
 	FieldConfigColor struct {
-		Mode       string `json:"mode"`
+		Mode       string `json:"mode,omitempty"`
 		FixedColor string `json:"fixedColor,omitempty"`
 		SeriesBy   string `json:"seriesBy,omitempty"`
 	}
